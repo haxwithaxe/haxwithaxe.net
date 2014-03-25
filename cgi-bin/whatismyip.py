@@ -1,6 +1,11 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim: set noexpandtab tabstop=4 shiftwidth=4 :
 
-import cgi, os, sys
+import web
+import page
 
-print('Content-Type: text/plain\n')
-sys.stdout.write(os.environ['REMOTE_ADDR'])
+class WhatIsMyIP(page.Page):
+    ''' '''
+    page = 'whatismyip'
+    def on_GET(self):
+        return web.ctx.env.get('REMOTE_ADDR')

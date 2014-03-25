@@ -1,18 +1,18 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim: set noexpandtab tabstop=4 shiftwidth=4 :
 
-import cgi
-import cgitb; cgitb.enable()
-import os
+import web
+import config
+import page
 
-db_filename = '../ping.db'
+class Ping(page.Page):
+    path = 'ping'
+    defaults = {'am':None, 'ip': None}
 
-form = cgi.FieldStorage()
-host = form.getvalue('am',None)
-pushed_ip = form.getvalue('ip',None)
-remote_host = os.environ['REMOTE_ADDR']
-record = '%s;%s;%s\n' % (host, pushed_ip, remote_host)
-db = open(db_filename, 'a')
-db.write(record)
-db.close()
-print('Content-Type: text/plain\n')
-print(record)
+    def on_GET(self):
+        remote_host = web.ctx.env.get('REMOTE_ADDR')
+        record = '%s;%s;%s\n' % (host, pushed_ip, remote_host)
+        db = open(config.ping_db_filename, 'a')
+        db.write(record)
+        db.close()
+        return record

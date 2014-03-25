@@ -5,3 +5,4 @@
 /*.vcf
 /wiki
 /error
+*.pyc
